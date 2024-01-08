@@ -135,54 +135,48 @@ const List = (props) => {
 export default List
 ```
 
-- useLayoutEffect
-使用场景：useLayoutEffect 会在 浏览器 layout 之后，painting 之前执行。
+- useLayoutEffect，使用场景：useLayoutEffect 会在 浏览器 layout 之后，painting 之前执行。
 ```js
 import React from 'https://esm.sh/react@18';
 import ReactDom from 'https://esm.sh/react-dom@18';
 import { message } from "https://esm.sh/antd@5.12.5?bundle&deps=react@18.2.0";
-
 const {useMemo, useState, useEffect, useRef, useLayoutEffect} = React;
-
 const BlinkyRender = () => {
   const [value, setValue] = useState(0);
-
   //useLayoutEffect
   useLayoutEffect(() => {
     if (value === 0) {
       setValue(10 + Math.random() * 200);
     }
   }, [value]);
-
   return (<>
     <div>value: {value}</div>
     <input type="button" onClick={() => setValue(0)} value="确定" />
   </>);
 };
-
 function App({title}) {
 	return(<>
 		<h1>乱跳问题：</h1>
     <BlinkyRender />
 	</>);
 }
-
 ReactDom.render(
   <App />,document.querySelector("#root")
 )
 ```
 
 - useMutationEffect，废弃
+- useDebugValue，可用于在 React 开发者工具中显示自定义 hook 的标签
 
 # 手写一个useMemo
 
 # v18 新Hook
-useTransition
-useMutableSource
-useDeferredValue
-useTransitionState
-useSyncExternalStore
-useImperativeHandle
+- useTransition
+- useMutableSource
+- useDeferredValue
+- useTransitionState
+- useSyncExternalStore
+- useImperativeHandle
 
 # React 性能监控
 React Profiler
