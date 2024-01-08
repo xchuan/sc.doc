@@ -1,2 +1,7 @@
 - [设计模式](articles\设计模式\观察者模式和订阅模式.md)
 - [十大算法](articles\算法\10大算法.md)
+- [工具](articles\效率\工具.md)
+- [常用CDN](articles\效率\常用CDN.md)
+- [快捷键](articles\效率\快捷键.md)
+- [React资料](articles\前端\React资料.md)
+- [Markdown语法](articles\效率\Markdown语法.md)

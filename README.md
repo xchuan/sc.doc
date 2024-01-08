@@ -21,3 +21,6 @@ docsify
 
 全插件
 https://cloud.tencent.com/developer/article/2177009
+
+启动命令
+docsify serve
