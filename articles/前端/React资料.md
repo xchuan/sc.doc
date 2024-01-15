@@ -169,6 +169,31 @@ ReactDom.render(
 - useDebugValue，可用于在 React 开发者工具中显示自定义 hook 的标签
 
 # 手写一个useMemo
+```js
+const useMemo = (memoFn, dependencies) => {
+  if (memorizedState[index]) {
+    // 不是第一次执行
+    let [lastMemo, lastDependencies] = memorizedState[index]
+
+    let hasChanged = !dependencies.every((item, index) => item === lastDependencies[index])
+    if (hasChanged) {
+      memorizedState[index++] = [memoFn(), dependencies]
+      return memoFn()
+    } else {
+      index++
+      return lastMemo
+    }
+  } else {
+    // 第一次执行
+    memorizedState[index++] = [memoFn(), dependencies]
+    return memoFn()
+  }
+}
+```
+
+参考资料:
+<https://jacky-summer.github.io/2020/10/26/%E6%89%8B%E5%86%99%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0-React-Hooks/>
+
 
 # v18 新Hook
 - useTransition

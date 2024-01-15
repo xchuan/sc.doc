@@ -5,3 +5,5 @@
 - [快捷键](articles\效率\快捷键.md)
 - [React资料](articles\前端\React资料.md)
 - [Markdown语法](articles\效率\Markdown语法.md)
+- [编程单词表](articles\效率\编程单词表.md)
+- [算法题](articles\算法\算法题.md)
