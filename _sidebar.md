@@ -7,3 +7,5 @@
 - [Markdown语法](articles\效率\Markdown语法.md)
 - [编程单词表](articles\效率\编程单词表.md)
 - [算法题](articles\算法\算法题.md)
+- [名人名言](articles\成长\名人名言.md)
+- [长视频](articles\成长\长视频.md)
