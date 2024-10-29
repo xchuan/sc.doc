@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+      integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <style>
+      *,
+      *::after,
+      *::before {
+        margin: 0;
+        padding: 0;
+        border: none;
+        outline: none;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        font-size: 16px;
+        background-color: #f5f5f5;
+        color: #333;
+      }
+
+      .container {
+        display: flex;
+        height: 100vh;
+        width: 100%;
+        flex-direction: column;
+      }
+
+      .header {
+        text-align: center;
+        width: 100%;
+        padding: 40px 0px;
+      }
+
+      .scroll-container {
+        height: 700px;
+        position: relative;
+      }
+
+      #c1{
+        position: absolute;
+        left:0px;
+        top:0px;
+        width: 2400px;
+        height: 700px;
+      }
+
+      .carousel-primary,
+      .carousel-secondary {
+        top: auto;
+        width: auto;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+      }
+
+      .carousel-primary {
+        left: 0%;
+      }
+      .carousel-secondary {
+        left: 1287px;
+      }
+      .carousel-primary img,
+      .carousel-secondary img {
+        width: auto;
+        margin-left: 0px;
+        border-radius: 14px;
+        height: 700px;
+      }
+
+      .carousel-primary {
+        display: flex;
+        justify-content: space-around;
+        /*animation: scroll-horizontal 20s linear infinite;*/
+      }
+
+      .carousel-secondary {
+        /*animation: scroll-horizontal 20s linear infinite;
+  animation-delay: 10s;*/
+      }
+
+      @keyframes scroll-horizontal {
+        0% {
+          left: 100%;
+        }
+
+        100% {
+          left: -100%;
+        }
+      }
+    </style>
+    <title>Infinite Horizontal Scroll and Hover Pause with Pure CSS</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2>Infinite Horizontal Scroll and Hover Pause with Pure CSS</h2>
+      </div>
+      <div class="scroll-container" id="scroll-container">
+        <div id="c1">
+          <div class="carousel-primary">
+            <img src="/assets/cat/wtzm.svg" alt="cat1" />
+          </div>
+          <div id="c2" class="carousel-secondary">
+            <img src="/assets/cat/wtzm.svg" alt="cat5" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      //https://stackoverflow.com/questions/60803720/is-there-a-way-to-make-infinate-loop-horizontal-scrolling-css
+      function moveDown(element) {
+        var elStyle = window.getComputedStyle(element);
+        var topValue = elStyle.getPropertyValue("left").replace("px", "");
+        element.style.top = Number(topValue) + 20 + "px";
+      }
+
+      var stHandel;
+
+      function move(element, direction, distance = 20) {
+        var topOrLeft =
+          direction == "left" || direction == "right" ? "left" : "top";
+        var speed = 4;
+        var frameDistance = 1 * speed;
+        if (direction == "up" || direction == "left") {
+          distance *= -1 * speed;
+          frameDistance = -1 * speed;
+        }
+        var elStyle = window.getComputedStyle(element);
+        var value = elStyle.getPropertyValue(topOrLeft).replace("px", "");
+        var destination = Number(value) + distance + "px";
+        console.log(destination,"destination");
+        function moveAFrame() {
+          console.log(
+            elStyle.getPropertyValue(topOrLeft),
+            "moveAFrame",
+            destination
+          );
+          if (elStyle.getPropertyValue(topOrLeft) == destination) {
+            clearInterval(stHandel);
+          } else {
+            elStyle = window.getComputedStyle(element);
+            value = elStyle.getPropertyValue(topOrLeft).replace("px", "");
+            element.style[topOrLeft] = Number(value) + frameDistance + "px";
+          }
+        }
+        stHandel = setInterval(moveAFrame, 1);
+      }
+
+      var oneC = document.getElementById("c1");
+
+      document
+        .getElementById("c1")
+        .addEventListener("wheel", myFunction);
+
+      function myFunction(e) {
+        console.log(e.wheelDelta);
+        if (e.wheelDelta < 0) {
+          console.log("鼠标滚轮后滚");
+          //_.debounce(() => {
+          if (stHandel) clearInterval(stHandel);
+          move(oneC, "right", 100);
+          //}, 50)
+        } else if (e.wheelDelta > 0) {
+          console.log("鼠标滚轮前滚");
+          if (stHandel) clearInterval(stHandel);
+          move(oneC, "left", 100);
+        }
+      }
+      window.onmousewheel = document.onmousewheel = (e) => {};
+
+      document.addEventListener("DOMContentLoaded", () => {
+        var box = document.getElementById("c1");
+        var observer = new IntersectionObserver(function (entries) {
+          console.log(entries);
+        });
+        observer.observe(box);
+      });
+    </script>
+  </body>
+</html>
